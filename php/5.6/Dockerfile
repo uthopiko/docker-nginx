@@ -14,5 +14,10 @@ RUN export VERSION=`php -r "echo PHP_MAJOR_VERSION.PHP_MINOR_VERSION;"` \
     && tar zxpf /tmp/blackfire-probe.tar.gz -C /tmp \
     && mv /tmp/blackfire-*.so `php -r "echo ini_get('extension_dir');"`/blackfire.so \
     && echo "extension=blackfire.so\nblackfire.agent_socket=\${BLACKFIRE_PORT}" > $PHP_INI_DIR/conf.d/blackfire.ini
+RUN mkdir -p /var/cache/benchmark/
+RUN mkdir -p /var/logs/benchmark/
+RUN usermod -u 1000 www-data
+RUN chown -R www-data:www-data /var/cache/benchmark
+RUN chown -R www-data:www-data /var/logs/benchmark
 CMD ["php-fpm"]
 

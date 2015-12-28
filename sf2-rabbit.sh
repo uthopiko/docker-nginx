@@ -7,7 +7,5 @@ export BLACKFIRE_CLIENT_ID=284a9306-271b-46e4-b443-6915a60904dc
 export ASIER_PRUEBA=3s243dsf
 
 docker run --name="blackfire" -d -e BLACKFIRE_SERVER_ID -e BLACKFIRE_SERVER_TOKEN blackfire/blackfire
-docker run -d -p 9001:9000 --name=php5.6 --link blackfire:blackfire -v /Users/Asier/Docker/php/php-fpm.conf:/usr/local/etc/php-fpm.conf -v /Users/Asier/Docker/php/socket:/var/run php5
-
-
-bash
+docker run -d -p 9001:9000 --name=php5.6 -v /Users/Asier/Docker/php/php-fpm.conf:/usr/local/etc/php-fpm.conf -v /Users/Asier/PhpProjects:/usr/share/nginx/html php5
+docker run --name nginx --link php5.6:fpm --link blackfire:blackfire -v /Users/Asier/Docker/nginx:/etc/nginx -v /Users/Asier/PhpProjects:/usr/share/nginx/html/ -d -p 8080:80 nginx
